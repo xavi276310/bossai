@@ -38,4 +38,4 @@ for index, row in data.iterrows():
         ids=[f"job_{index}"]
     )
 
-print("数据已成功存储到 Chroma 数据库中。")
+print("数据已成功存储到Chroma数据库中。")
