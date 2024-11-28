@@ -1,0 +1,827 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 对话</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #chat-box {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+        #input-box {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #submit-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .user-message, .bot-message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .user-message {
+            background-color: #d9fdd3;
+            text-align: right;
+        }
+        .bot-message {
+            background-color: #e9e9e9;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI 对话</h1>
+    <div id="chat-box"></div>
+    <textarea id="input-box" rows="4" placeholder="输入你的问题..."></textarea><br>
+    <button id="submit-btn">发送</button>
+
+    <script>
+        // 生成一个随机用户ID
+        const userId = Math.floor(Math.random() * 1000000);
+        // 选择 HTML 元素
+        const chatBox = document.getElementById('chat-box');
+        const inputBox = document.getElementById('input-box');
+        const submitBtn = document.getElementById('submit-btn');
+
+        // 监听发送按钮的点击事件
+        submitBtn.addEventListener('click', function() {
+            const userInput = inputBox.value;
+            if (!userInput.trim()) return;  // 确保输入不为空
+
+            // 将用户输入显示在聊天框中
+            addMessageToChat(userInput, 'user');
+
+            // 清空输入框
+            inputBox.value = '';
+
+            // 构建请求的Body
+            const requestBody = {
+                user_id: userId,
+                message: userInput
+            };
+
+            // 发送POST请求到后端API
+            fetch('/v1/gpt/salary-query', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // 从后端获取的回复
+                const botResponse = data.data.message || "无法获取回复";  // 假设后端返回 { response_message: "内容" }
+                addMessageToChat(botResponse, 'bot');
+            })
+            .catch(error => {
+                console.error('请求错误:', error);
+                addMessageToChat("请求失败，请稍后重试。", 'bot');
+            });
+        });
+
+        // 添加消息到聊天框
+        function addMessageToChat(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+            messageDiv.innerText = message;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;  // 滚动到底部
+        }
+    </script>
+</body>
+</html>
+-->
+
+
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 对话</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #chat-box {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+        #input-box {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #submit-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .user-message, .bot-message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .user-message {
+            background-color: #d9fdd3;
+            text-align: right;
+        }
+        .bot-message {
+            background-color: #e9e9e9;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI 对话</h1>
+    <div id="chat-box"></div>
+    <textarea id="input-box" rows="4" placeholder="输入你的问题..."></textarea><br>
+    <button id="submit-btn">发送</button>
+
+    <script>
+        // 生成一个随机用户ID
+        const userId = Math.floor(Math.random() * 1000000);
+        // 选择 HTML 元素
+        const chatBox = document.getElementById('chat-box');
+        const inputBox = document.getElementById('input-box');
+        const submitBtn = document.getElementById('submit-btn');
+
+        // 监听发送按钮的点击事件
+        submitBtn.addEventListener('click', function() {
+            const userInput = inputBox.value;
+            if (!userInput.trim()) return;  // 确保输入不为空
+
+            // 将用户输入显示在聊天框中
+            addMessageToChat(userInput, 'user');
+
+            // 清空输入框
+            inputBox.value = '';
+
+            // 构建请求的Body
+            const requestBody = {
+                user_id: userId,
+                message: userInput
+            };
+
+            // 发送POST请求到后端API
+            fetch('http://54.179.116.211/v1/gpt/salary-query', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // 从后端获取的回复
+                const botResponse = data.data.message || "无法获取回复";  // 假设后端返回 { response_message: "内容" }
+                addMessageToChat(botResponse, 'bot');
+            })
+            .catch(error => {
+                //console.error('请求错误:', error);
+                addMessageToChat("请求失败，请稍后重试。", 'bot');
+            });
+        });
+
+        // 添加消息到聊天框
+        function addMessageToChat(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+            messageDiv.innerText = message;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;  // 滚动到底部
+        }
+    </script>
+</body>
+</html>
+-->
+
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 对话</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #chat-box {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+        #input-box {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #submit-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .user-message, .bot-message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .user-message {
+            background-color: #d9fdd3;
+            text-align: right;
+        }
+        .bot-message {
+            background-color: #e9e9e9;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI 对话</h1>
+    <div id="chat-box"></div>
+    <textarea id="input-box" rows="4" placeholder="输入你的问题..."></textarea><br>
+    <button id="submit-btn">发送</button>
+
+    <script>
+        // 生成一个随机用户ID
+        const userId = Math.floor(Math.random() * 1000000);
+        // 选择 HTML 元素
+        const chatBox = document.getElementById('chat-box');
+        const inputBox = document.getElementById('input-box');
+        const submitBtn = document.getElementById('submit-btn');
+
+        // 监听发送按钮的点击事件
+        submitBtn.addEventListener('click', function() {
+            const userInput = inputBox.value;
+            if (!userInput.trim()) return;  // 确保输入不为空
+
+            // 将用户输入显示在聊天框中
+            addMessageToChat(userInput, 'user');
+
+            // 清空输入框
+            inputBox.value = '';
+
+            // 构建请求的Body
+            const requestBody = {
+                user_id: userId,
+                message: userInput,
+                stream: true  // 设置 stream 为 true，启动逐字输出
+            };
+
+            // 使用 fetch 发送 POST 请求
+            fetch('http://54.179.116.211/v1/gpt/salary-query', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            })
+            .then(response => {
+                const reader = response.body.getReader();  // 读取响应流
+                const decoder = new TextDecoder();         // 解码字节流为文本
+
+                // 逐块处理响应流
+                function processText({ done, value }) {
+                    if (done) {
+                        return;  // 读取完成
+                    }
+
+                    // 解码并将文本添加到聊天框
+                    const chunk = decoder.decode(value, { stream: true });
+                    addMessageToChat(chunk, 'bot');
+
+                    // 继续读取下一块数据
+                    return reader.read().then(processText);
+                }
+
+                return reader.read().then(processText);
+            })
+            .catch(error => {
+                // 处理错误
+                addMessageToChat("请求失败，请稍后重试。", 'bot');
+            });
+        });
+
+        // 添加消息到聊天框
+        function addMessageToChat(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+            messageDiv.innerText = message;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;  // 滚动到底部
+        }
+    </script>
+</body>
+</html>
+-->
+
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 对话</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #chat-box {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+        #input-box {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #submit-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .user-message, .bot-message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .user-message {
+            background-color: #d9fdd3;
+            text-align: right;
+        }
+        .bot-message {
+            background-color: #e9e9e9;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI 对话</h1>
+    <div id="chat-box"></div>
+    <textarea id="input-box" rows="4" placeholder="输入你的问题..."></textarea><br>
+    <button id="submit-btn">发送</button>
+
+    <script>
+        // 生成一个随机用户ID
+        const userId = Math.floor(Math.random() * 1000000);
+        // 选择 HTML 元素
+        const chatBox = document.getElementById('chat-box');
+        const inputBox = document.getElementById('input-box');
+        const submitBtn = document.getElementById('submit-btn');
+
+        // 监听发送按钮的点击事件
+        submitBtn.addEventListener('click', function() {
+            const userInput = inputBox.value;
+            if (!userInput.trim()) return;  // 确保输入不为空
+
+            // 将用户输入显示在聊天框中
+            addMessageToChat(userInput, 'user');
+
+            // 清空输入框
+            inputBox.value = '';
+
+            // 构建请求的Body
+            const requestBody = {
+                user_id: userId,
+                message: userInput,
+                stream: true  // 设置 stream 为 true，启动逐字输出
+            };
+
+            // 使用 fetch 发送 POST 请求
+            fetch('http://54.179.116.211/v1/gpt/salary-query', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            })
+            .then(response => {
+                const reader = response.body.getReader();  // 读取响应流
+                const decoder = new TextDecoder();         // 解码字节流为文本
+                let accumulatedMessage = '';               // 用于拼接完整的消息
+
+                // 逐块处理响应流
+                function processText({ done, value }) {
+                    if (done) {
+                        return;  // 读取完成
+                    }
+
+                    // 解码响应的字节流
+                    const chunk = decoder.decode(value, { stream: true });
+
+                    // 解析每一行的 "data: " 格式
+                    const lines = chunk.split('\n');
+                    lines.forEach(line => {
+                        if (line.startsWith('data: ')) {
+                            // 提取 JSON 部分并解析
+                            const jsonData = JSON.parse(line.substring(6));
+                            const botMessage = jsonData.message;
+                            accumulatedMessage += botMessage;  // 拼接消息
+                        }
+                    });
+
+                    // 更新聊天框，展示拼接的消息
+                    addMessageToChat(accumulatedMessage, 'bot');
+
+                    // 继续读取下一块数据
+                    return reader.read().then(processText);
+                }
+
+                return reader.read().then(processText);
+            })
+            .catch(error => {
+                // 处理错误
+                addMessageToChat("请求失败，请稍后重试。", 'bot');
+            });
+        });
+
+        // 添加消息到聊天框
+        function addMessageToChat(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+            messageDiv.innerText = message;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;  // 滚动到底部
+        }
+    </script>
+</body>
+</html>
+-->
+
+
+<!--
+<!DOCTYPE html>//这个已经可以逐行输出了，但是问题在于输出长的回答的时候报错
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 对话</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #chat-box {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+        #input-box {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #submit-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .user-message, .bot-message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .user-message {
+            background-color: #d9fdd3;
+            text-align: right;
+        }
+        .bot-message {
+            background-color: #e9e9e9;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI 对话</h1>
+    <div id="chat-box"></div>
+    <textarea id="input-box" rows="4" placeholder="输入你的问题..."></textarea><br>
+    <button id="submit-btn">发送</button>
+
+    <script>
+        // 生成一个随机用户ID
+        const userId = Math.floor(Math.random() * 1000000);
+        // 选择 HTML 元素
+        const chatBox = document.getElementById('chat-box');
+        const inputBox = document.getElementById('input-box');
+        const submitBtn = document.getElementById('submit-btn');
+
+        // 监听发送按钮的点击事件
+        submitBtn.addEventListener('click', async function() {
+            const userInput = inputBox.value;
+            if (!userInput.trim()) return;  // 确保输入不为空
+
+            // 将用户输入显示在聊天框中
+            addMessageToChat(userInput, 'user');
+
+            // 清空输入框
+            inputBox.value = '';
+
+            // 构建请求的Body
+            const requestBody = {
+                user_id: userId,
+                message: userInput,
+                stream: true  // 设置 stream 为 true，启动逐字输出
+            };
+
+            // 使用 fetch 发送 POST 请求
+            fetch('http://54.179.116.211/v1/gpt/salary-query', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            })
+            .then(response => {
+                const reader = response.body.getReader();  // 读取响应流
+                const decoder = new TextDecoder();         // 解码字节流为文本
+                let accumulatedMessage = '';               // 用于拼接完整的消息
+
+                // 逐块处理响应流
+                async function processText({ done, value }) {
+                    if (done) {
+                        return;  // 读取完成
+                    }
+
+                    // 解码响应的字节流
+                    const chunk = decoder.decode(value, { stream: true });
+
+                    // 解析每一行的 "data: " 格式
+                    const lines = chunk.split('\n');
+                    for (const line of lines) {
+                        if (line.startsWith('data: ')) {
+                            // 提取 JSON 部分并解析
+                            const jsonData = JSON.parse(line.substring(6));
+                            const botMessage = jsonData.message;
+                            accumulatedMessage += botMessage;  // 拼接消息
+
+                            // 实时更新聊天框，逐字输出
+                            addMessageToChat(accumulatedMessage, 'bot');
+
+                            // 强制浏览器渲染每个字符
+                            await new Promise(resolve => setTimeout(resolve, 50));  // 每次输出增加50ms延迟
+                        }
+                    }
+
+                    // 继续读取下一块数据
+                    return reader.read().then(processText);
+                }
+
+                return reader.read().then(processText);
+            })
+            .catch(error => {
+                // 处理错误
+                addMessageToChat("请求失败，请稍后重试。", 'bot');
+            });
+        });
+
+        // 添加消息到聊天框
+        function addMessageToChat(message, sender) {
+            // 检查最后一个 bot 消息框是否已经存在
+            let lastBotMessage = document.querySelector('.bot-message:last-child');
+
+            if (!lastBotMessage || sender === 'user') {
+                // 创建新的消息 div
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+                messageDiv.innerText = message;
+                chatBox.appendChild(messageDiv);
+            } else {
+                // 更新最后一个 bot 消息框
+                lastBotMessage.innerText = message;
+            }
+            chatBox.scrollTop = chatBox.scrollHeight;  // 滚动到底部
+        }
+    </script>
+</body>
+</html>
+-->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 对话</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #chat-box {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+        #input-box {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #submit-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .user-message, .bot-message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .user-message {
+            background-color: #d9fdd3;
+            text-align: right;
+        }
+        .bot-message {
+            background-color: #e9e9e9;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI 对话</h1>
+    <div id="chat-box"></div>
+    <textarea id="input-box" rows="4" placeholder="输入你的问题..."></textarea><br>
+    <button id="submit-btn">发送</button>
+
+    <script>
+        // 生成一个随机用户ID
+        const userId = Math.floor(Math.random() * 1000000);
+        // 选择 HTML 元素
+        const chatBox = document.getElementById('chat-box');
+        const inputBox = document.getElementById('input-box');
+        const submitBtn = document.getElementById('submit-btn');
+
+        // 监听发送按钮的点击事件
+        submitBtn.addEventListener('click', async function() {
+            const userInput = inputBox.value;
+            if (!userInput.trim()) return;  // 确保输入不为空
+
+            // 将用户输入显示在聊天框中
+            addMessageToChat(userInput, 'user');
+
+            // 清空输入框
+            inputBox.value = '';
+
+            // 构建请求的Body
+            const requestBody = {
+                user_id: userId,
+                message: userInput,
+                stream: true  // 设置 stream 为 true，启动逐字输出
+            };
+
+            try {
+                // 使用 fetch 发送 POST 请求，并设置 keepalive 确保连接稳定
+                const response = await fetch('http://54.179.116.211/v1/gpt/salary-query', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody),
+                    keepalive: true
+                });
+
+                if (!response.ok) {
+                    throw new Error('网络响应不正常');
+                }
+
+                const reader = response.body.getReader();  // 读取响应流
+                const decoder = new TextDecoder();         // 解码字节流为文本
+                let accumulatedMessage = '';               // 用于拼接完整的消息
+
+                // 逐块处理响应流
+                async function processText({ done, value }) {
+                    if (done) {
+                        return;  // 读取完成
+                    }
+
+                    // 解码响应的字节流
+                    const chunk = decoder.decode(value, { stream: true });
+
+                    // 解析每一行的 "data: " 格式
+                    const lines = chunk.split('\n');
+                    for (const line of lines) {
+                        if (line.startsWith('data: ')) {
+                            try {
+                                // 提取 JSON 部分并解析
+                                const jsonData = JSON.parse(line.substring(6));
+                                const botMessage = jsonData.message;
+                                accumulatedMessage += botMessage;  // 拼接消息
+
+                                // 实时更新聊天框，逐字输出
+                                addMessageToChat(accumulatedMessage, 'bot');
+
+                                // 强制浏览器渲染每个字符
+                                await new Promise(resolve => setTimeout(resolve, 50));  // 每次输出增加50ms延迟
+                            } catch (jsonError) {
+                                console.error('JSON 解析错误:', jsonError);
+                            }
+                        }
+                    }
+
+                    // 继续读取下一块数据
+                    return reader.read().then(processText);
+                }
+
+                await reader.read().then(processText);
+
+            } catch (error) {
+                // 处理错误
+                console.error('请求错误:', error);
+                addMessageToChat("请求失败，请稍后重试。", 'bot');
+            }
+        });
+
+        // 添加消息到聊天框
+        function addMessageToChat(message, sender) {
+            // 检查最后一个 bot 消息框是否已经存在
+            let lastBotMessage = document.querySelector('.bot-message:last-child');
+
+            if (!lastBotMessage || sender === 'user') {
+                // 创建新的消息 div
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+                messageDiv.innerText = message;
+                chatBox.appendChild(messageDiv);
+            } else {
+                // 更新最后一个 bot 消息框
+                lastBotMessage.innerText = message;
+            }
+            chatBox.scrollTop = chatBox.scrollHeight;  // 滚动到底部
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
